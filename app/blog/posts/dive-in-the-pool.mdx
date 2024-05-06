@@ -1,0 +1,84 @@
+---
+layout: post
+title: "GSoC Week 7: Dive In The Pool"
+publishedAt: "2018-07-03"
+categories: gsoc
+---
+
+## What have I been upto?
+
+This week **finally** involved writing some code. I started off with making pool and putting them to use. It took me a long time to figure out things, but once I did it felt like "This wasn't that tricky, hmm".
+
+In one of my previous posts, I was quite excited about the world cup and how I feared German team was going to dominate. Let's say this world cup has surprised a lot of people and many AIs.
+
+This [PR](https://github.com/MovingBlocks/Terasology/pull/3417) covers up my week's work, I'll discuss a few things in this post.
+
+## Pools
+
+Originally when a new game was launched, `globalPool` object of the `EngineEntityPool` was created. Pools allow us to manage entities more distinctly and logically. All the entities created were simply put into this pool. That made sense if you're dealing with one world. But now with the introduction of multiple worlds, you need a different pool for each world and efficient interaction between the two pools as well.
+
+Now, whenever more than one world is selected, a pool is created for each world. This takes place in the `CreateWorldEntity` process. Initially, only the `globalPool` was created which was used for all the entities. Now a list of pools is generated depending on the number of worlds. Out of those, the pool of the target world is selected and all subsequent entities are put in that pool.
+So a method for creating entities which looked like this
+
+```java
+@Override
+public EntityBuilder newBuilder() {
+    return globalPool.newBuilder();
+}
+```
+
+will now look like
+
+```java
+@Override
+public EntityBuilder newBuilder() {
+    return getCurrentWorldPool().newBuilder();
+}
+```
+
+The `getCurrentWorldPool()` return the target world's pool if it exists or the simply the `globalPool`.
+Some entities are created before the `CreateWorldEntity` does its job. For those, simply the `globalPool` is used assuming that they exist irrespective of the worlds.
+
+## World Manager
+
+`WorldManager` is a class which created the bridge between the world pools and the worlds added to the `GameManifest`. The class maintains a `Map<WorldInfo, EngineEntityPool>` and information about the target world. There are methods to add more pools and worlds to the map and to change the current world. The `setCurrentWorld` method is not used as of now but would be needed later on when transferring between two worlds would be enabled. Right now, the current world is set in the constructor with the object of the target world.
+
+## Other Changes
+
+There were a lot of methods inside the `PojoEntityManager` which would use the `globalPool` to send a list/count of some entities. Or even the `getComponentStore` method returned `ComponentStore` method of only the `globalPool`, so all these methods needed a little tweaking. Here's an example:
+A method which looked like:
+
+```java
+@Override
+public Iterable<EntityRef> getAllEntities() {
+    return Iterables.concat(globalPool.getAllEntities(),
+                sectorManager.getAllEntities(),
+                getCurrentWorldPool().getAllEntities());
+}
+```
+
+will have to be changed now to account for the world pool which might have been created. Hence the function should be something like:
+
+```java
+@Override
+public Iterable<EntityRef> getAllEntities() {
+    if (worldPoolIsGlobalPool()) {
+        return Iterables.concat(globalPool.getAllEntities(),
+                        sectorManager.getAllEntities());
+    }
+    return Iterables.concat(globalPool.getAllEntities(),
+                sectorManager.getAllEntities(),
+                getCurrentWorldPool().getAllEntities());
+}
+```
+
+The `worldPoolIsGlobalPool()` method tells if the only created pool is the global pool. It looks something like:
+
+```java
+public boolean worldPoolIsGlobalPool() {
+       if (getCurrentWorldPool() == globalPool) {
+           return true;
+       }
+       return false;
+   }
+```

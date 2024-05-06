@@ -1,6 +1,6 @@
 import { BlogPosts } from "app/components/posts";
 import Image from "next/image";
-import meImage from "../pubilc/me.png";
+import MyTimeline from "app/components/mytimeline";
 
 export default function Page() {
     return (
@@ -12,8 +12,8 @@ export default function Page() {
                 {/* <Image className='rounded-full ml-auto' src={meImage} alt='me in ladakh' height={50} width={50}/>  */}
             </div>
             <Image
-                className="rounded-full mx-auto p-1 border border-gray-400"
-                src={meImage}
+                className="rounded-full mx-auto p-1 border border-gray-400 dark:border-gray-400"
+                src="/me.png"
                 alt="me in ladakh"
                 height={200}
                 width={200}
@@ -35,16 +35,60 @@ export default function Page() {
                     href="https://www.iitb.ac.in/"
                     target="_blank"
                     className="underline"
-                ></a>
-                IIT Bombay in 2021.
+                >
+                    IIT Bombay
+                </a>{" "}
+                in 2021. My undergraduate thesis was focused on using Deep
+                Learning to predict mechanical deformation, I was part of{" "}
+                <a
+                    href="https://homepages.iitb.ac.in/~anirbanpatra/"
+                    target="_blank"
+                    className="underline"
+                >
+                    Computational Mechanics and Materials Research Group
+                </a>{" "}
+                guided by{" "}
+                <a
+                    href="https://www.iitb.ac.in/mems/en/prof-anirban-patra"
+                    target="_blank"
+                    className="underline"
+                >
+                    Prof. Anirban Patra
+                </a>
+                {"."}
             </p>
             <p>
                 I've been a programmer for almost 8 years now and have been
-                doing it professionally for 3 years for startups and small size
-                companies. I enjoy working
+                doing it professionally for 3 years for startups. I enjoy
+                working on different technologies and writing software! I worked
+                at{" "}
+                <a
+                    href="https://augnito.ai/"
+                    target="_blank"
+                    className="underline"
+                >
+                    Augnito
+                </a>{" "}
+                as a backend developer for two years after which I worked for{" "}
+                <a
+                    href="https://www.withplaymo.co/"
+                    target="_blank"
+                    className="underline"
+                >
+                    Playmo
+                </a>{" "}
+                as full stack developer.
             </p>
-            <div className="my-8">
+            <p>
+                In my free time I enjoy teaching, reading (mostly non-fiction),
+                watching anime and playing badminton. During lockdown, I also
+                played video games - mostly FPS like COD and CS.
+            </p>
+            <div className="my-4">
                 <BlogPosts />
+            </div>
+            <div className="my-4">
+                <MyTimeline />
             </div>
         </section>
     );

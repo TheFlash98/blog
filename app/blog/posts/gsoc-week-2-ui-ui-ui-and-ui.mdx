@@ -1,0 +1,51 @@
+---
+layout: post
+title: "GSoC Week 2: UI, UI, UI and UI!"
+publishedAt: "2018-05-27"
+categories: main
+---
+
+## What have I been upto?
+
+This week has been lighter than the previous week; I got done with the targets well in advance (including review :D). This week involved handling a lot of UI and aimed to finish the "frontend" of the new create game flow. All the following UIs have been merged in the `create-game-v2` branch of MovingBlock/Terasology.
+
+## The Different Screens
+
+Let's go over everything screen by screen. There is a new addition to the `SelectGameScreen`. I've added a new "Test" button which will lead you to the new flow.
+
+![alt text](/gsoc/creategamescreen.png)
+
+The "Test" button will lead you to a screen called the `NewGameScreen`.
+The `NewGameScreen` gives you the option to see the game name and template and directly start playing without bothering yourself with the advanced settings. However, if you are brave enough to configure your universe, worlds and such, then there is the "Advanced" button.
+
+![alt text](/gsoc/newgamescreen.png)
+
+Clicking on that button would take you to the next screen called the `AdvancedGameSetupScreen`. The `AdvancedGameSetupScreen` gives you the option of load modules and seed. It's very similar to the good old `SelectModulesScreen`.
+
+![alt text](/gsoc/advancegamesetupscreen.png)
+
+Following is the [PR](https://github.com/MovingBlocks/Terasology/pull/3367) for these two screen is.
+
+After this screen, you continue to the `UniverseSetupScreen`. On this screen, you first select a world generator, click add. This creates a named world in the "Worlds" list. The number of times you click add, the more world you'd have in your universe. You would be able to go ahead and configure those worlds individually as well.
+
+![alt text](/gsoc/universesetupscreen.png)
+
+The "add" button and the "configure" buttons would lead you to the `WorldSetupScreen`. This screen gives options to select specific things about your world like the shape, hilliness, ocean, trees densities etc.
+
+![alt text](/gsoc/worldsetupscreen.png)
+
+Following is the [PR](https://github.com/MovingBlocks/Terasology/pull/3370) for these two screen is.
+
+Once you're done configuring your universe, we move to the `WorldPreGenerationScreen`. On this screen you can the preview everything and also set the rate of time progression during pre-generation. Default to 0 which means chunks generate but game time is frozen. You can make time start before entering the world to first witness simulation of world evolution for a given period.
+
+![alt text](/gsoc/worldpregenerationscreen.png)
+
+And all done! You're set to preview your final map and start playing after the `StartPlayingScreen`. An additional feature on this screen would the pick up your spawn world and hopefully spawn location as well.
+
+![alt text](/gsoc/startplayingscreen.png)
+
+Following is the [PR](https://github.com/MovingBlocks/Terasology/pull/3372) for these two screen is.
+
+Here is a nice video of everything done:
+
+<Youtube id="pkn2MeNWK9k" />

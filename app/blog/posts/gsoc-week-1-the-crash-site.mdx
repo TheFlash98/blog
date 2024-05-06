@@ -1,0 +1,28 @@
+---
+layout: post
+title: "GSoC Week 1: The Crash Site"
+publishedAt: "2018-05-20"
+categories: gsoc
+---
+
+I finally kicked off my GSoC project this Monday, a week later than what I promised in my proposal due to an unplanned event in the previous week. Nevertheless, it's been a smooth ride so far. My mentors are very active, and my slack channel #multi-world is raining with messages. Quite what I expected! So let's get to this week's activities.
+
+## Exit Points
+
+I started off the week with investigating all the various exit points in the game and documenting them in a single place. Here's an [issue](https://github.com/MovingBlocks/Terasology/issues/1296) which related to this.
+The research was not very tough, a simple search through IntelliJ for the word "shutdown" gave loads of suggestions. Now it was just figuring out if that line was a particular system's shutdown (which is triggered by the main shutdown process) or was it the line triggering the main `shutdown()` method present in the `GameEngine` class. I dived a bit deeper into seeing which thread might be misbehaving during the shutdown process. The documentation of the exit points can be found [here](https://github.com/MovingBlocks/Terasology/issues/1296#issuecomment-390435898) as a comment on the same issue.
+
+## The Crash Site
+
+The latter half of this week was spent majorly in investigating a bug which has long existed in Terasology. It's the crash of the `SelectModulesScreen` when opened after opening the `PreviewWorldScreen`. After a lot of digging + breakpoints and hot coffee, we narrowed down that it is caused due to the environment change present in the preview world screen. Especially these few lines Especially lines [225-229](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/rendering/nui/layers/mainMenu/PreviewWorldScreen.java#L225-L229). The expert of this domain is msteiger, one of my GSoC mentors but he was probably caught up this week. I've left him a summary of ~150 messages exchanged between nihal111, cervator and myself while investigating the crash site. Hopefully, it's a two minute fix for him. There is also an old [PR](https://github.com/MovingBlocks/Terasology/pull/2074) made by him, which he didn't get time to complete.
+
+Maybe I can try finishing it with little help from him. :D
+Investigating the crash site did give me some knowledge about how environments are loaded and switched, how module lists are downloaded and how UIScreen function. This should come in handy in the recent future.
+
+## Minutes of Meeting
+
+The weekly meeting which happens every Saturday at 12:30 am (Technically Sunday for IST people) took place yesterday. It lasted for around an hour and 15 minutes and included finalising the project board. The project board had all card upside down (because that's how they're created). I changed the order, moved a few cards here and there to balance out the work distribution. A few cards were transferred to the relevant columns as per the work that was done this week. Some went to the backlog; however, I will try picking them up later if I get the time or even after my GSoC ends.
+
+## What's next?
+
+The next two weeks would focus on re-working the create game UIs and the various phases involved in the process. Here is a [nice diagram](https://goo.gl/hizreb) of what's coming. It would be majorly a scaffolding of sorts to hook in the multi-world stuff once they are completed later in the project.

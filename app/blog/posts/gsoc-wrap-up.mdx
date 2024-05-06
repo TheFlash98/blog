@@ -1,0 +1,61 @@
+---
+layout: post
+title: "GSoC Wrap Up"
+publishedAt: "2018-08-12"
+categories: gsoc
+---
+
+It's time to write my GSoC wrap, the journey which began in March from writing a proposal has come to an end! It has been a highly eventful summer with over _7000 lines_ of code written. I've learned a lot over these summers, spending countless hours writing and debugging code for this amazing game. The community, especially the mentors have been really helpful and I could not thank them enough for what they've done for me.
+
+## End Product
+
+All my work done as a part of GSoC can be majorly divided into two parts
+
+-   The Create Game Flow
+-   Multi World
+
+The first is changing the way a game was created to support multiple worlds in the same game. The latter part of it is the actual technical things related to multiple worlds. Let's look at the step by step.
+
+## The Create Game Flow
+
+This part dealt heavily with revamping the UI for creating the game to support multiple worlds in it. The player will be able to pick the number of worlds he/she wants in the Universe and also configure each of those worlds individually. [Here's](https://theflash98.github.io/main/2018/05/27/GSoC-Week-2-UI-UI-UI-and-UI.html) a detailed post about how each screen works and what their significance is. Here's a video describing the latest UI flow:
+
+<Youtube id="bg8RBM4piMY" />
+
+The list of **PRs** related to this are:
+
+-   [https://github.com/MovingBlocks/Terasology/pull/3367](https://github.com/MovingBlocks/Terasology/pull/3367)
+-   [https://github.com/MovingBlocks/Terasology/pull/3370](https://github.com/MovingBlocks/Terasology/pull/3370)
+-   [https://github.com/MovingBlocks/Terasology/pull/3372](https://github.com/MovingBlocks/Terasology/pull/3372)
+-   [https://github.com/MovingBlocks/Terasology/pull/3373](https://github.com/MovingBlocks/Terasology/pull/3373)
+-   [https://github.com/MovingBlocks/Terasology/pull/3377](https://github.com/MovingBlocks/Terasology/pull/3377)
+-   [https://github.com/MovingBlocks/Terasology/pull/3383](https://github.com/MovingBlocks/Terasology/pull/3383)
+-   [https://github.com/MovingBlocks/Terasology/pull/3385](https://github.com/MovingBlocks/Terasology/pull/3385)
+-   [https://github.com/MovingBlocks/Terasology/pull/3388](https://github.com/MovingBlocks/Terasology/pull/3388)
+-   [https://github.com/MovingBlocks/Terasology/pull/3398](https://github.com/MovingBlocks/Terasology/pull/3398)
+
+## Multi-World
+
+This was a rather difficult part of my project. It included diving deep into the Entity Component System of the game. Initially, when a game was launched, all the entities of the game existed in a single "global pool". There was no segregation of any sort. My work adds the feature of splitting different entities into different pools, for each world there would be a separate pool where its entities would go. Also made a global pool where the commonly shared entities would go. A detailed post about pools can be found [here](https://theflash98.github.io/main/2018/07/03/GSoC-Week-7-Dive-In-The-Pool.html).
+I also made a few commands to the test the existence of these pools. You could see the number of worlds, move entities from one pool to another, create entities in specific pools and such. Here's detailed [post](https://theflash98.github.io/main/2018/07/11/GSoC-Week-8-Roger-That-!.html) about what these commands are and how to use them.
+Here's a list of PR which went into these:
+
+-   [https://github.com/MovingBlocks/Terasology/pull/3417](https://github.com/MovingBlocks/Terasology/pull/3417)
+-   [https://github.com/MovingBlocks/Terasology/pull/3434](https://github.com/MovingBlocks/Terasology/pull/3434)
+-   [https://github.com/MovingBlocks/Terasology/pull/3451](https://github.com/MovingBlocks/Terasology/pull/3451)
+-   [https://github.com/MovingBlocks/Terasology/pull/3463](https://github.com/MovingBlocks/Terasology/pull/3463)
+
+## Planned vs Done
+
+The original goal according to the proposal was more than what we could manage in a span of 3 months. We initially planned to solve multiple issues regarding block registerations and dupe chunk loading as a part of this GSoC. However on actually doing them, they turned out to be very cumbersome and we decided to move to the multi-world stuff directly.
+
+One of the major goals which remains outstanding in multi-world is filling each of those pools with entities and enabling a transfer between worlds. We even got a few ideas like implementing different time rates of different worlds, having a universe level chat system. The complexity of anything related to the Entity Component System's design was more than what we anticipated causing the project to go off the timeline to some extents.
+
+Even though project did not reach the end goal it was meant to, the work progressed incrementally and everything finished during GSOC (all the PRs mentioned in this post) have been merged and are in use.
+You can find my project board [here](https://github.com/orgs/MovingBlocks/projects/15) for more detailed information.
+
+## Future
+
+Current all these pools only exist in the background, the teleportation to different worlds is one of the major things which need to be done. Along with that, there are tons of things which one can do with multiple world setup. Transfering entities across worlds, designing portals through you can throw stuff into different worlds. The topic of multiple worlds is a very big technical challenge but is a lot of fun! I personally will finish things one by one, obviously at a slower than GSoC.
+
+> My father always scolded me for playing video games and would say "Will you waste all your time playing games and never learn anything about how they're made?". Maybe I should have a word with him about this. ;)

@@ -1,0 +1,117 @@
+---
+layout: default
+title: "Setting Up RTD"
+publishedAt: "2018-02-02"
+categories: main
+---
+
+Read The Docs are a great way to documenting your work and I recently had to make one for my club, [WnCC](https://wncc-iitb.org/).
+
+You have two options which in which you can write your documentation. Either markdown or reStructuredText. The official documentation of RTD recommends using reStructuredText so that is what we are going to do.
+
+## Install Python and Sphinx
+
+Install Python, the version I am using white writing this documentation is 2.7.10. You can use Python3 as well, there won't be any issues. [Sphinx](http://www.sphinx-doc.org/en/stable/) is a tool that makes it easy to create intelligent and beautiful documentation. To install it via pip
+
+```shell
+pip install sphinx sphinx-autobuild
+```
+
+## Configuring Docs
+
+Make the directory of yours docs,
+
+```shell
+$ cd /path/to/project
+$ mkdir docs
+```
+
+In that directory run `sphinx-quickstart`. This will walk you through the basics of setting up your docs. In most case you will choose the default option. Once this process is complete you will have a proper directory stucture formed. When it's done you will have a `index.rst` and `conf.py`. All the options you select in `sphinx-quickstart` will appear in `conf.py` and you can edit them there as well.
+
+Your directory will have a `source` directory and a `build` directory. The `build` directory is the one which has all the `html` rendered files from the `.rst` files you write in the `source` directory. To inialise the theme and have the needed templated in the `build` folder. The default theme is `alabaster`, however how I've used the `sphinx_rtd_theme`. You can install it via pip using
+`pip install sphinx_rtd_theme`
+and then change your theme in `conf.py`. Now that you have it all setup run
+`sphinx-autobuild source build/html` and go [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+## Writing Content
+
+Now that you have everything setup, it's time to fill in some content. Edit your `index.rst` and write
+
+```
+WnCC Journal
+========================================
+
+.. toctree::
+   :maxdepth: 4
+   :caption: Contents:
+
+   portals/portals
+   wiki/wiki
+   website/website
+```
+
+The first line contains the heading and the other entry is toctree which stands for Table Of Content Tree. These two are compulsory entries for the `index.rst` file. The toc tree depicts the stucture of docs. So in the `source` directory make directories and some `rst` files so that it looks something like this
+
+```
+.
+├── _static
+├── _templates
+├── conf.py
+├── index.rst
+├── portals
+│   └── portals.rst
+├── website
+│   └── website.rst
+└── wiki
+    └── wiki.rst
+```
+
+Mentioning `portals/portals` in the toctree defines the landing page for each. Now if you save all this and go back to your page you will see:
+
+-   Portals
+-   Wiki
+-   Website
+
+Each of these will direct to rendered `.rst` mentioned in the toctree by you in `index.rst`.
+
+## Managing Directories
+
+Now to have a proper tree with proper links make your docs directory look something like this.
+
+```
+.
+├── _static
+├── _templates
+├── conf.py
+├── index.rst
+├── portals
+│   ├── django.rst
+│   ├── portals.rst
+│   ├── server.rst
+│   └── templates.rst
+├── website
+│   ├── hook.rst
+│   ├── jekyll.rst
+│   ├── server.rst
+│   └── website.rst
+└── wiki
+    ├── backup.rst
+    ├── setup.rst
+    └── wiki.rst
+```
+
+Now modify the `wiki.rst` to look something like
+
+```
+Wiki
+====
+
+.. toctree::
+   :maxdepth: 4
+   :caption: Contents:
+
+   setup
+   backup
+```
+
+The `===` signifies that the text written over it is a title, only by writing `===` does `Sphinx` generate a link to it. Note that in this toctree only the `.rst` files in the same directory are mentioned. Go ahead and do this for the rest.

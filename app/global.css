@@ -148,3 +148,7 @@ table {
 .title {
   text-wrap: balance;
 }
+
+.ant-timeline {
+    @apply font-sans;
+}

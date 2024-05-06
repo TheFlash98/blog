@@ -1,0 +1,36 @@
+---
+layout: post
+title: "GSoC Week 8: Roger That!"
+publishedAt: "2018-07-11"
+categories: gsoc
+---
+
+## What have I been up to?
+
+In the last week, I laid out the initial setup for pools and how to create + deal with them in the multi-world scenario. In this week, I've built some new commands which would help you analyse your universe setup and play around with it.
+
+Along with these commands, I also wrote a basic test. It was the first ever test I've written in my life, and it was an exciting experience.
+
+## World Commands
+
+-   `getUniverseInfo`: This is a simple command which only prints the information about the different pools and the number of entities present in each pool. It looks something like this:
+
+![Get Universe Info](/gsoc/getUnivInfo.png)
+
+-   `makeEntity <world name>`: This command creates an entity in the mentioned world. World Name start from "main", "main1"... "mainN" where N is one less than the number of worlds you create in your universe.
+
+![Make Entity](/gsoc/makeEntity.png)
+
+-   `moveEntity <world name> <entity id>`: The command moves the entity with the given id to the specified world name.
+
+![Move Entity](/gsoc/moveEntity.png)
+
+-   `whereIs <entity id>`: Takes the id of an entity and returns the world in which that entity is present.
+
+![Where Is](/gsoc/whereIs.png)
+
+-   `simulate` **[WIP]**: This command is something I am working on right now. It is supposed to create an entity which keeps logging about the entity pool it is present in. any changes made to its pool will then be reflected automatically without the need of a separate `whereIs` method.
+
+## MessageSentTest
+
+I also wrote a new test using the `ModuleTestingEnvironment`. The test creates a host and connects two clients to it. One of the clients sends a message to the other client, and it's verified if the message is sent successfully. It was exciting to write this test using JUnit because I have never written tests before it. However, that test only asserts if an event is sent or not. A few more additions like checking if the message is the same or not are yet to be added to it.

@@ -1,0 +1,50 @@
+---
+layout: post
+title: "GSoC Week 6: Digging up"
+publishedAt: "2018-06-24"
+categories: gsoc
+---
+
+## What have I been up to?
+
+This week has been a bit slow, compared to the other weeks. It involved less writing code and more researching ways to do things.
+
+So far, I've discovered a lot of things, a lot of which might not be relevant but I found out about them anyway.
+
+## Launching a new game
+
+Whenever a new game is launched, a new GameManifest is created with game title, modules, and WorldInfo. After making the needed GameManifest object, the GameState is changed to StateLoading.
+In StateLoading there are multiple processes with are added in either [`initHost`](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/engine/modes/StateLoading.java#L141) or [`initClient`](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/engine/modes/StateLoading.java#L167).
+Every process has a `step` function which performs the actual process and returns true once done. If the function fails to return true, it is called again after some time. There are many processes, I only investigated some which I thought were relevant to my work.
+
+## IntialiseWorld
+
+-   The [`WorldInfo`](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/world/internal/WorldInfo.java) which was added to the [`GameManifest`](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/game/GameManifest.java) while initialising the new game is now put to use. The WorldInfo is actually stored as a `Map<String, WorldInfo>` and this process simply gets the [`TerasologyConstants.MAIN_WORLD`](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/engine/modes/loadProcesses/InitialiseWorld.java#L92) whose value is "main". This made me understand that the world in which the player will spawn, it's key should be "main" or `TerasologyConstants.MAIN_WORLD`.
+-   The [`WorldGeneratorManager`](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/engine/modes/loadProcesses/InitialiseWorld.java#L101) is fetched from the context, and a new generator is created, and seed is set for it.
+-   A new [`StorageManager`](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/engine/modes/loadProcesses/InitialiseWorld.java#L119) is instantiated to handle saving the game.
+-   A [`LocalChunkProvider`](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/engine/modes/loadProcesses/InitialiseWorld.java#L130) is instantiated which in turn creates [`ChunkGenerationPipeline`](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/world/chunks/pipeline/ChunkGenerationPipeline.java) where 8 threads are made for the loading of various chunks.
+
+## InitialiseBlockTypeEntities
+
+-   This process, as the name suggests initialises all entities with the [`BlockTypeComponent`](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/world/block/typeEntity/BlockTypeEntityGenerator.java#L52).
+-   The entities are built in the [`generateBlockTypeEntity`](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/world/block/typeEntity/BlockTypeEntityGenerator.java#L79) method of the `BlockTypeEntityGenerator` class. This method calls the [`build`](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/entitySystem/entity/EntityBuilder.java#L104) method of `EntityBuilder` class. In this method, the entity is assigned a pool using the [`assignToPool`](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/entitySystem/entity/internal/PojoEntityManager.java#L563) of `PojoEntityManager`, which maps entity ids to a `PojoEntityPool` object.
+
+## CreateWorldEntity
+
+-   All the world properties like tree density are accessed here and added to the newly created [`worldEntity`](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/engine/modes/loadProcesses/CreateWorldEntity.java#L56).
+-   The worldEntity is created using a [globalPool](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/entitySystem/entity/internal/PojoEntityManager.java#L125) in the `PojoEntityManager` which I think is the only pool created and used throughout the game.
+-   This entity is created in a different way but just like the BlockType entities towards the end, the same build method is called which allots it to a pool. This pool is the same as the globalPool used to create the entity initially.
+
+## InitialiseWorldGenerator
+
+-   A world generator is initialised and all the relevant entities associated with it are built and move them to the same pool being used till now. A large number of entities are built here.
+
+## The Chunk Generation Thread
+
+-   The `build` method of `EntityBuilder` is now called by a large number of threads in completely random order creating chunks.
+
+## Sectors
+
+Apart from these processes, I've been looking at the way Sectors function as well. All the significant classes needed for the functioning are present in the engine but to put them in use, one needs to activate the TutorialSectors module.
+
+The module makes use of the [`createSectorEntity`](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/entitySystem/entity/internal/PojoEntityManager.java#L134) method in the `PojoEntityManager` which in turn triggers the [`create`](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/entitySystem/entity/internal/PojoSectorManager.java#L73) method of the `PojoSectorManager` class. The `PojoSectorManager` [creates a new pool](https://github.com/MovingBlocks/Terasology/blob/develop/engine/src/main/java/org/terasology/entitySystem/entity/internal/PojoSectorManager.java#L40) in its constructor which is then used to build the sectors entity. The entity is also given the relevant components needed for simulation.

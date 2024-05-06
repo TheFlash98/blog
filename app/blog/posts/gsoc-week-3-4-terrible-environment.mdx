@@ -1,0 +1,58 @@
+---
+layout: post
+title: "GSoC Week 3, 4: Terrible Environment"
+publishedAt: "2018-06-09"
+categories: gsoc
+---
+
+## What have I been up to?
+
+In the past two weeks, I've dealt with a lot nasty environment stuff (Terasology + heavy rains in Mumbai), but the storm is finally over. :D
+
+I've managed to finish the complete backend of the new create game flow. This was technically my last week's target, but it took way longer than I expected. Fortunately, my original workload for this week was quite low, and I could accommodate this backlog without any trouble.
+
+## The New Create Game Flow
+
+Now let's go through the complete new process of creating a new game and how this lays the foundation for multi-world.
+
+So as usual, you run the game and select whether you want multi-player or single-player. It takes you to the old `SelectGameScreen` with the simple addition of a "Test" button which will allow you to launch the game through the new way.
+
+![alt text](/gsoc/ss1.png)
+
+Eventually, when this is merged into the default branch of Terasology, the "Test" button will be removed and clicking "Create" would initiate the process. But for now clicking "Test" takes you to the `NewGameScreen`.
+
+![alt text](/gsoc/ss2.png)
+
+This screen has the game name and loads the all the Gameplay modules you have locally in your setup. To make any module a Gameplay module you need to add `"isGameplay": true` to its `module.txt`. On selecting particular gameplay, the related modules get activated, and you're set to step into the game by clicking the "play" button. However, if you want to do some advanced configuration, click on the "Advanced" button. This button leads to the `AdvancedGameSetupScreen` where you can see all the selected modules, enable more of them and see details for each module. This screen also allows you to edit the "Universe" level seed. After this, this seed will no longer be accessible or visible.
+
+![alt text](/gsoc/ss3.png)
+
+The "continue" button leads to the `UniverseSetupScreen` and also initiates the switching the environment. The environment switch was the trickiest part of the entire backend setup. A new `Context` is created, and only the classes relevant to creating a new game are added to this context. This context has an asset manager of its own along with other classes like `CopyStrategyLibrary`, `ReflectLibrary` etc. It is passed along to all the screens after this screen so that they all operate in this sub-environment.
+
+Here is the [PR](https://github.com/MovingBlocks/Terasology/pull/3383) which implemented major environment changes:
+
+On the next screen, the `UniverseSetupScreen` you can view the world generator options for the selected game template.
+
+![alt text](/gsoc/ss4.png)
+
+For a particular world generator, you can add a "World" to the worlds drop down below. "HeightMap" is not supported by this new create game flow. HeightMap is quite different from the other world generators. The environment it needs to load is different, and I am unable to handle that in my current environment.
+Clicking the add button creates new `WorldSetupWrapper` object with a name, configurator and world generator. Each of these worlds is configurable, hitting "configure" button next to selected world name leads to the `WorldSetupScreen`. The world shape option is disabled for now, will be added later.
+
+Here is the [PR](https://github.com/MovingBlocks/Terasology/pull/3377) which implemented this
+
+![alt text](/gsoc/ss5.png)
+
+This screen will have list all the properties of your world. You can either change them and click "accept" to save those changes, or you can simply go back by clicking cancel and let the world be as it is. Clicking continue on the `UniverseSetupScreen` leads to the `WorldPreGenerationScreen`.
+
+![alt text](/gsoc/ss6.png)
+
+On this screen, you can view the preview of the selected world and preview it. You have the option of changing the properties again if you don't like how your preview look. The preview will accordingly update to match the latest properties. Clicking Re-roll refreshes the preview and changes the world seed for that particular world. Note that world seed for a particular is not visible to the user yet. Clicking "continue" on this screen takes you to the final, `StartPlayingScreen`.
+
+![alt text](/gsoc/ss7.png)
+
+By default, you are spawned in the world which is selected in the previous screen. You can view the preview again on this screen before stepping into the game. Now, you're all set to start playing! :)
+
+Some final PRs:
+
+-   [PR#3384](https://github.com/MovingBlocks/Terasology/pull/3385)
+-   [PR#3388](https://github.com/MovingBlocks/Terasology/pull/3388)

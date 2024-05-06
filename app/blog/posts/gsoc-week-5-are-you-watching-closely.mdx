@@ -1,0 +1,27 @@
+---
+layout: post
+title: "GSoC Week 5: Are you watching closely?"
+publishedAt: "2018-06-16"
+categories: gsoc
+---
+
+## What have I been up to?
+
+This week was exciting and quite eventful.
+The 11th of June marked the start of Google's **first evaluation**. The evaluation consisted of a short form given by Google to each student. Google called it a "short five minutes" form, but it took me 45 minutes to fill all questions appropriately. However, the evaluation went well, and I was happy to read the positive feedback I got from my mentors. Hopefully, this goes on till the end of the project. :)
+
+The **Fifa World Cup** kicked off in Russia on the 14th of June! I'm on Argentina's side but have a terrible feeling about the German team destroying other teams like last time. Let's see :D
+
+![alt text](/gsoc/world-cup-2018.jpg)
+
+## Cleaning up
+
+This week involved giving some final touches to the create game flow. Here are some of the issues that were solved/eliminated.
+
+-   The HeightMap gave a crash when tried to previewed or configured. HeightMap works differently, and unlike the other modules it requires the `engine` module already loaded into the environment and tries to access a few assets through the `CoreRegistry`. Now that uses the `context` which was last set to it. I discovered, that even if the `context` is changed by doing something like `CoreRegistry.setContext(subContext)` it is reset to the original `Context` by an update method which is run at every tick. I tried working around it but there were too many systems dependent on the original Context causing NPEs in place I've never been. So for now, HeightMap support is disabled and one cannot create a world with HeightMap as the generator.
+
+-   The buggy behaviour of the zoom. On the `WorldPreGenerationScreen` there is no preview button, to trigger the preview manually. It is always triggered automatically whenever needed. Which means it should trigger whenever there is a change in the zoom value. So to do that I set a `Binding` on the slider. However, that was a very buggy solution. The preview was triggered even if the user clicked the slider without changing any value. So there was a need for "onValueChanged" method. [@nihal111](https://github.com/nihal111), one of my mentors came to my rescue and made the technique which solved the issue quickly. He was quite adamant about addressing it, went ahead and did it himself.
+
+## Future
+
+Now with the create game flow in place, it's time to get to the actual multi-world things. In the past few days, I've been looking at the code of sectors which splits up a single world in different sectors with clear boundaries. Doing that for multiple worlds should be less complicated because, for a world, the boundaries are clear. One world would consist of a world specific entity pool along with a global pool. There are a lot of classes which help in pool creation and management. My investigation is still on, and hopefully, the next blog will involve nice pools for worlds.
