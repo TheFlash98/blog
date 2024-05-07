@@ -20,7 +20,7 @@ export default function Page() {
             <p>
                 I'm your friendly neighbourhood backend developer who has
                 recently experimented with frontend frameworks and created this
-                personal homepage. I am an incoming Master's in Computer Science
+                personal homepage. I am an incoming Masters in Computer Science
                 student at{" "}
                 <a
                     href="https://gsas.nyu.edu/"

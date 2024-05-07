@@ -4,9 +4,9 @@ import TimelineElement from "./timelineelement";
 
 const myTimelineEvents = [
     {
-        heading: "Master's in Computer Science",
+        heading: "Masters in Computer Science",
         subheading: "NYU Courant, August '24",
-        desc: "Incoming master's students for the Fall '24 batch of NYU Courant Master's in Computer Science. \
+        desc: "Incoming master's students for the Fall '24 batch of NYU Courant's Masters in Computer Science. \
         Actively seeking internship positions in software development roles.",
     },
     {
@@ -27,7 +27,7 @@ const myTimelineEvents = [
         minor in Computer Science and Engineering.",
     },
     {
-        heading: "Master's Thesis",
+        heading: "Masters Thesis",
         subheading: "Prof. Anirban Patra, August '20",
         desc: (
             <p>
