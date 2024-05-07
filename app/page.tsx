@@ -1,4 +1,3 @@
-import { BlogPosts } from "app/components/posts";
 import Image from "next/image";
 import MyTimeline from "app/components/mytimeline";
 
@@ -30,7 +29,10 @@ export default function Page() {
                 >
                     New York University
                 </a>{" "}
-                for Fall '24. I completed my undergraduation from{" "}
+                for Fall '24.
+            </p>
+            <p>
+                I completed my undergraduation from{" "}
                 <a
                     href="https://www.iitb.ac.in/"
                     target="_blank"
@@ -84,9 +86,9 @@ export default function Page() {
                 watching anime and playing badminton. During lockdown, I also
                 played video games - mostly FPS like COD and CS.
             </p>
-            <div className="my-4">
-                <BlogPosts />
-            </div>
+            <p className="font-semibold">
+                Here's a brief look at my journey so far
+            </p>
             <div className="my-4">
                 <MyTimeline />
             </div>

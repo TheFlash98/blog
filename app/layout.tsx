@@ -23,6 +23,7 @@ export const metadata: Metadata = {
         siteName: "Sarthak Khandelwal",
         locale: "en_US",
         type: "website",
+        images: "/me.png",
     },
     robots: {
         index: true,

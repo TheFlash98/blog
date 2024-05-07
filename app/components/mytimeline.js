@@ -12,9 +12,8 @@ const myTimelineEvents = [
     {
         heading: "Full Stack Developer",
         subheading: "Playmo, October '23",
-        desc: "Implemented the companies primary offering, building the entire tech stack from inception. Developed a responsive PWA \
-            using React (NextJS) and Python (Django) with PostgreSQL database. Collaborated cross-functionally with design \
-            and product teams to ensure seamless app development",
+        desc: "Implemented the companies primary offering, building the entire tech stack from inception. \
+        Collaborated cross-functionally with design and product teams in a fast paced environment.",
     },
     {
         heading: "Backend Developer",
@@ -22,29 +21,63 @@ const myTimelineEvents = [
         desc: "Part of a 3 member backend team responsible for the entire cloud and backend stack of the company.",
     },
     {
-        heading: "Graduation from IIT Bombay",
-        subheading: "August '21",
-        desc: "Graduated from IIT Bombay!",
+        heading: "Graduation",
+        subheading: "IIT Bombay, August '21",
+        desc: "Graduated from IIT Bombay with a BTech + MTech in Metallurgical Engineering and Materials Science and a\
+        minor in Computer Science and Engineering.",
     },
     {
         heading: "Master's Thesis",
         subheading: "Prof. Anirban Patra, August '20",
-        desc: "Did some cool research",
+        desc: (
+            <p>
+                Worked on predicting the mechanical deformation of dual phase
+                microstructures using different deep learning techniques. Find
+                complete analysis and results in the{" "}
+                <a
+                    href="https://doi.org/10.1016/j.mtcomm.2021.102914"
+                    target="_blank"
+                >
+                    paper
+                </a>
+                .
+            </p>
+        ),
     },
     {
-        heading: "Data Analyst Intern @ Yahoo! Japan",
-        subheading: "Tokyo, May '19",
-        desc: "Went to tokyo for 3 months!",
+        heading: "Data Analyst Intern",
+        subheading: "Yahoo! Japan, May '19",
+        desc: (
+            <p>
+                Went to Tokyo for 3 months as an intern in the Media Data User
+                Analytics Team (MeDUsA) at{" "}
+                <a href="https://www.yahoo.co.jp/" target="_blank">
+                    Yahoo! Japan
+                </a>
+                .
+            </p>
+        ),
     },
     {
-        heading: "GSoC Intern @ Terasology",
-        subheading: "Remote, May '18",
-        desc: "GSoC student for 10 weeks!",
+        heading: "Google Summer of Code",
+        subheading: "Terasology, May '18",
+        desc: (
+            <p>
+                Selected as one of the{" "}
+                <a href="https://summerofcode.withgoogle.com/" target="_blank">
+                    GSoC
+                </a>{" "}
+                students for{" "}
+                <a href="https://terasology.org/" target="_blank">
+                    Terasology
+                </a>
+            </p>
+        ),
     },
     {
-        heading: "Started Undergrad @ IIT Bombay",
-        subheading: "July '16",
-        desc: "Dream come true!",
+        heading: "Started Undergrad",
+        subheading: "IIT Bombay, July '16",
+        desc: "",
     },
 ];
 
