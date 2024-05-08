@@ -20,7 +20,7 @@ export default function Page() {
             <p>
                 I'm your friendly neighbourhood backend developer who has
                 recently experimented with frontend frameworks and created this
-                personal homepage. I am an incoming Masters in Computer Science
+                personal homepage. I'm an incoming Masters in Computer Science
                 student at{" "}
                 <a
                     href="https://gsas.nyu.edu/"
@@ -40,8 +40,8 @@ export default function Page() {
                 >
                     IIT Bombay
                 </a>{" "}
-                in 2021. My undergraduate thesis was focused on using Deep
-                Learning to predict mechanical deformation, I was part of{" "}
+                in 2021. My undergraduate thesis focused on using Deep Learning
+                to predict mechanical deformation - as a part of{" "}
                 <a
                     href="https://homepages.iitb.ac.in/~anirbanpatra/"
                     target="_blank"
@@ -79,12 +79,11 @@ export default function Page() {
                 >
                     Playmo
                 </a>{" "}
-                as full stack developer.
+                as a full stack developer.
             </p>
             <p>
                 In my free time I enjoy teaching, reading (mostly non-fiction),
-                watching anime and playing badminton. During lockdown, I also
-                played video games - mostly FPS like COD and CS.
+                watching anime and playing badminton.
             </p>
             <p className="font-semibold">
                 Here's a brief look at my journey so far
