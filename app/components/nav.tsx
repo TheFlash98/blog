@@ -8,6 +8,15 @@ const navItems = {
     "/blog": {
         name: "blog",
     },
+    "/teaching": {
+        name: "teaching",
+    },
+    "/research": {
+        name: "research",
+    },
+    "/projects": {
+        name: "projects",
+    },
 };
 
 export function Navbar() {
