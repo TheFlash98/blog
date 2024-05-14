@@ -35,7 +35,7 @@ const teachingItems = [
         description: [
             <span>
                 Taught high school mathematics and physics to underpriviliedged
-                kids for the Community Teaching NGO. Reading more about it{" "}
+                kids for the Community Teaching NGO. Read more about it{" "}
                 <a
                     href="/blog/community-teaching-initiative"
                     target="_blank"
