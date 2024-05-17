@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Hamburger from "./hamburger";
 
 const navItems = {
     "/": {
@@ -21,13 +22,14 @@ const navItems = {
 
 export function Navbar() {
     return (
-        <aside className="-ml-[8px] mb-8 tracking-tight">
+        <aside className="-ml-[8px] mb-4 lg:mb-8 tracking-tight">
             <div className="lg:sticky lg:top-20">
                 <nav
                     className="flex flex-row items-start relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative"
                     id="nav"
                 >
-                    <div className="flex flex-row space-x-0 pr-10">
+                    <Hamburger />
+                    <div className="hidden lg:flex flex-row space-x-0 pr-10 ">
                         {Object.entries(navItems).map(([path, { name }]) => {
                             return (
                                 <Link
